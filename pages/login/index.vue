@@ -2,20 +2,38 @@
   <div>
     <div class="login">
       <img src="~/assets/logo.png" alt="lenteart" />
-      <form>
+      <form @submit.prevent="Login">
         <h3>Login</h3>
 
         <label for="email">Email</label>
-        <input type="text" placeholder="Email" />
+        <input v-model="email" type="text" placeholder="Email" />
 
         <label for="password">Password</label>
-        <input type="password" placeholder="Password" />
+        <input v-model="password" type="password" placeholder="Password" />
 
         <button>LogIn</button>
       </form>
     </div>
   </div>
 </template>
+
+<script>
+const supabase = useSupabaseClient();
+
+const email = ref("");
+const password = ref("");
+
+const Login = async () => {
+  const { data } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
+  });
+  if (data) {
+    navigateTo("/");
+    console.log("login berhasil");
+  }
+};
+</script>
 
 <script setup>
 definePageMeta({
