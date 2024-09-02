@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <div class="login">
-      <img src="~/assets/logo.png" alt="lenteart" />
+  <div class="container">
+    <div class="Login">
+      <img src="~/assets/logo.png" alt="lenteart" class="logo" />
       <form @submit.prevent="Login">
         <h3>Login</h3>
 
         <label for="email">Email</label>
-        <input v-model="email" type="text" placeholder="Email" />
+        <input v-model="email" type="email" placeholder="Email" />
 
         <label for="password">Password</label>
         <input v-model="password" type="password" placeholder="Password" />
@@ -17,7 +17,10 @@
   </div>
 </template>
 
-<script>
+<script setup>
+definePageMeta({
+  layout: "login",
+});
 const supabase = useSupabaseClient();
 
 const email = ref("");
@@ -28,17 +31,11 @@ const Login = async () => {
     email: email.value,
     password: password.value,
   });
+
   if (data) {
     navigateTo("/");
-    console.log("login berhasil");
   }
 };
-</script>
-
-<script setup>
-definePageMeta({
-  layout: "login",
-});
 </script>
 
 <style scoped>
@@ -49,21 +46,17 @@ definePageMeta({
   font-family: "Poppins", sans-serif;
 }
 
-body {
-  background-color: #ffffff;
-}
-
-.login {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   height: 100vh;
 }
 
-.login > img {
+.logo {
   width: 80px;
   margin-bottom: 20px;
+  margin-left: 150px;
 }
 
 form {

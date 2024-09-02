@@ -1,79 +1,81 @@
 <template>
   <div>
-    <div class="container">
-      <div class="margin">
-        <h1>Wedding Only Package</h1>
-        <div class="containerP">
-          <div class="card">
-            <h2>Foto</h2>
-            <h3>700.000</h3>
-            <ul>
-              <li>1 Photographer</li>
-              <li>4 Jam kerja (MAX)</li>
-              <li>Best file edit</li>
-              <li>Backup master via google drive</li>
-            </ul>
-          </div>
-          <div class="card">
-            <h2>Foto</h2>
-            <h3>700.000</h3>
-            <ul>
-              <li>1 Photographer</li>
-              <li>4 Jam kerja (MAX)</li>
-              <li>Best file edit</li>
-              <li>Backup master via google drive</li>
-            </ul>
-          </div>
-          <div class="card">
-            <h2>Foto</h2>
-            <h3>700.000</h3>
-            <ul>
-              <li>1 Photographer</li>
-              <li>4 Jam kerja (MAX)</li>
-              <li>Best file edit</li>
-              <li>Backup master via google drive</li>
-            </ul>
-          </div>
+    <div class="judul">
+      <h1>ENGAGEMENT PACKAGE</h1>
+    </div>
+
+    <div v-for="(list, i) in pricelist" :key="i">
+      <div class="card-container">
+        <div class="card">
+          <p class="title">{{ list.judul }}</p>
+          <p class="harga">Rp{{ list.price }}</p>
+          <p class="benefit">
+            {{ list.benefit }}
+          </p>
+          <p class="output">
+            {{ list.output }}
+          </p>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+<script setup>
+const supabase = useSupabaseClient();
+const pricelist = ref([]);
+
+const getData = async () => {
+  const { data } = await supabase.from("package").select(`*, kategori(*)`);
+  if (data) pricelist.value = data;
+};
+
+onMounted(() => {
+  getData();
+});
+</script>
+
 <style scoped>
-* {
-  font-family: sans-serif;
-}
-
-.margin {
+.judul > h1 {
+  text-align: center;
   margin-top: 100px;
-  margin-bottom: 100px;
 }
 
-.containerP {
+.card-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 50px;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
+  height: 100%;
+  width: 100%;
 }
 
 .card {
-  background-color: #f5f5f5;
-  width: 200px;
-  padding: 15px;
-  line-height: 20px;
-  color: #000000;
-  box-shadow: 5px 10px #888888;
+  width: 300px;
+  height: 150px;
+  border-radius: 12px;
+  font-family: sans-serif;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 10px rgba(0, 0, 0, 0.24);
+  transition: all 300ms;
+  padding: 20px;
+  margin: 20px;
 }
 
-ul > li {
-  text-decoration: none;
-  list-style-type: none;
-  margin-left: -38px;
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.card .harga {
+  font-size: 1em;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.card .title {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #000;
 }
 </style>

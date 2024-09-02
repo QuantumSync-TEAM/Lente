@@ -1,39 +1,50 @@
 <template>
   <div>
     <div class="container">
-      <img src="~/assets/1.jpg" alt="" />
-      <img src="~/assets/1.jpg" alt="" />
-      <img src="~/assets/1.jpg" alt="" />
-      <img src="~/assets/1.jpg" alt="" />
-      <img src="~/assets/1.jpg" alt="" />
-      <img src="~/assets/1.jpg" alt="" />
-      <img src="~/assets/1.jpg" alt="" />
-      <img src="~/assets/1.jpg" alt="" />
+      <div class="fc">
+        <div class="foto">
+          <div class="persegi"></div>
+          <div class="perpanver"></div>
+        </div>
+        <div class="foto">
+          <div class="perpanver"></div>
+          <div class="persegi"></div>
+        </div>
+        <div class="foto">
+          <div class="persegi"></div>
+          <div class="perpanver"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* .container {
+.fc {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-} */
-
-.container > img {
-  width: 500px;
-  height: auto;
 }
 
-div.container {
-  background-color: #333;
-  overflow: auto;
-  white-space: nowrap;
-  padding: 10px;
+.persegi {
+  width: 150px;
+  height: 150px;
+  background-color: black;
+  margin: 10px;
 }
 
-div.container img {
-  padding: 10px;
+.perpanver {
+  width: 150px;
+  height: 300px;
+  background-color: black;
+  margin: 10px;
+}
+
+.perpanhor {
+  width: 100px;
+  height: 50px;
+  background-color: black;
+  margin: 10px;
 }
 </style>
