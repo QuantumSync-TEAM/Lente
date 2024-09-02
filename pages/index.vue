@@ -161,6 +161,12 @@
   cursor: pointer;
 }
 
+.nav:hover {
+  background-color: rgba(53, 53, 53, 0.8);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+}
+
 .nav a {
   color: #000000;
   text-decoration: none;

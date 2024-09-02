@@ -7,15 +7,15 @@
         </div>
         <div class="menu" id="nav-links" :class="{ show: menuOpen }">
           <div class="kiri">
-            <NuxtLink to="/"><p class="activ">Home</p></NuxtLink>
-            <NuxtLink to="#about"><p class="activ">About</p></NuxtLink>
+            <NuxtLink to="/"><div class="activ">Home</div></NuxtLink>
+            <NuxtLink to="#about"><div class="activ">About</div></NuxtLink>
           </div>
           <div class="logoNav">
             <img src="~/assets/logo.png" alt="Lenteart" />
           </div>
           <div class="kanan">
-            <NuxtLink to="#gallery"><p class="activ">Gallery</p></NuxtLink>
-            <NuxtLink to="#price-list"><p class="activ">Price List</p></NuxtLink>
+            <NuxtLink to="#gallery"><div class="activ">Gallery</div></NuxtLink>
+            <NuxtLink to="#price-list"><div class="activ">Price List</div></NuxtLink>
           </div>
         </div>
 
@@ -86,53 +86,96 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isScrolled: false,
-      menuOpen: false,
-    };
-  },
-  mounted() {
-    this.showSlides();
-    window.addEventListener("scroll", this.handleScroll);
-  },
-  beforeDestroy() {
-    window.removeEventListener("scroll", this.handleScroll);
-  },
-  methods: {
-    showSlides() {
-      let slideIndex = 0;
-      const slides = document.getElementsByClassName("slide");
-      setInterval(() => {
-        for (let i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) {
-          slideIndex = 1;
-        }
-        slides[slideIndex - 1].style.display = "block";
-      }, 2000);
-    },
+<script setup>
+// Define reactive variables
+const isScrolled = ref(false);
+const menuOpen = ref(false);
 
-    handleScroll() {
-      this.isScrolled = window.scrollY > 50;
-    },
-
-    // toggleMenu() {
-    //   this.menuOpen = !this.menuOpen;
-    // },
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-      const hamburger = document.getElementById("hamburger");
-      if (hamburger) {
-        hamburger.classList.toggle("menuOpen", this.menuOpen);
-      }
-    },
-  },
+// Function to handle slide show
+const showSlides = () => {
+  let slideIndex = 0;
+  const slides = document.getElementsByClassName("slide");
+  setInterval(() => {
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {
+      slideIndex = 1;
+    }
+    slides[slideIndex - 1].style.display = "block";
+  }, 2000);
 };
+
+// Function to handle scroll
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50;
+};
+
+// Function to toggle menu
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
+  const hamburger = document.getElementById("hamburger");
+  if (hamburger) {
+    hamburger.classList.toggle("menuOpen", menuOpen.value);
+  }
+};
+
+// Lifecycle hooks
+onMounted(() => {
+  showSlides();
+  window.addEventListener("scroll", handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+// export default {
+//   data() {
+//     return {
+//       isScrolled: false,
+//       menuOpen: false,
+//     };
+//   },
+//   mounted() {
+//     this.showSlides();
+//     window.addEventListener("scroll", this.handleScroll);
+//   },
+//   beforeDestroy() {
+//     window.removeEventListener("scroll", this.handleScroll);
+//   },
+//   methods: {
+//     showSlides() {
+//       let slideIndex = 0;
+//       const slides = document.getElementsByClassName("slide");
+//       setInterval(() => {
+//         for (let i = 0; i < slides.length; i++) {
+//           slides[i].style.display = "none";
+//         }
+//         slideIndex++;
+//         if (slideIndex > slides.length) {
+//           slideIndex = 1;
+//         }
+//         slides[slideIndex - 1].style.display = "block";
+//       }, 2000);
+//     },
+
+//     handleScroll() {
+//       this.isScrolled = window.scrollY > 50;
+//     },
+
+//     // toggleMenu() {
+//     //   this.menuOpen = !this.menuOpen;
+//     // },
+//     toggleMenu() {
+//       this.menuOpen = !this.menuOpen;
+//       const hamburger = document.getElementById("hamburger");
+//       if (hamburger) {
+//         hamburger.classList.toggle("menuOpen", this.menuOpen);
+//       }
+//     },
+//   },
+// };
 </script>
 
 <style>
@@ -297,6 +340,8 @@ nav {
 
   .activ {
     padding: 2px;
+    width: 70px;
+    margin-left: -30px;
   }
 
   .activ:active {
@@ -309,15 +354,19 @@ nav {
     display: flex;
   }
 
-  .kiri > p {
+  .kiri {
     display: flex;
     flex-direction: column;
+    text-align: center;
+    gap: 0;
     text-align: left;
   }
 
-  .kanan > p {
+  .kanan {
     display: flex;
     flex-direction: column;
+    text-align: center;
+    gap: 0;
     text-align: left;
   }
 

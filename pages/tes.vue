@@ -1,5 +1,11 @@
 <template>
   <div>
+    <h1>tes</h1>
+  </div>
+</template>
+
+<!-- <template>
+  <div>
     <h1>Gallery</h1>
     <div v-if="loading">Loading...</div>
     <div v-else>
@@ -76,4 +82,4 @@ export default {
   height: auto;
   display: block;
 }
-</style>
+</style> -->
