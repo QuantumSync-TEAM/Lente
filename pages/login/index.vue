@@ -4,7 +4,6 @@
       <img src="~/assets/logo.png" alt="lenteart" class="logo" />
       <form @submit.prevent="Login">
         <h3>Login</h3>
-
         <label for="email">Email</label>
         <input v-model="email" type="email" placeholder="Email" />
 
@@ -27,14 +26,14 @@ const email = ref("");
 const password = ref("");
 
 const Login = async () => {
-  const { data } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value,
   });
-
   if (data) {
     navigateTo("/");
   }
+  if (error) console.log("error");
 };
 </script>
 

@@ -30,7 +30,6 @@
 
     <footer class="footer">
       <div class="footer__content">
-        <!-- Media Sosial -->
         <div class="footer__section footer__social">
           <h2>Media Sosial</h2>
           <ul>
@@ -48,7 +47,6 @@
           </ul>
         </div>
 
-        <!-- Kontak -->
         <div class="footer__section footer__contact">
           <h2>Kontak</h2>
           <ul>

@@ -2,14 +2,10 @@
   <div>
     <section id="home">
       <div class="slideshow-container">
-        <div class="slide fade">
-          <img src="~/assets/1.jpg" style="width: 100%" />
-        </div>
-        <div class="slide fade">
-          <img src="~/assets/2.jpg" style="width: 100%" />
-        </div>
-        <div class="slide fade">
-          <img src="~/assets/3.jpg" style="width: 100%" />
+        <div v-for="(image, index) in images" :key="index" class="foto">
+          <div class="slide fade">
+            <img :src="image.img" alt="Image" class="image" style="width: 100%" />
+          </div>
         </div>
       </div>
     </section>
@@ -25,19 +21,8 @@
     </section>
 
     <section id="gallery">
-      <div class="cover">
+      <!-- <div class="cover">
         <img src="~/assets/1.jpg" alt="prewedding dan wedding" class="gallery-img" />
-        <!-- <div class="slideshow-container">
-          <div class="slide fade">
-            <img src="~/assets/1.jpg" style="width: 100%" />
-          </div>
-          <div class="slide fade">
-            <img src="~/assets/2.jpg" style="width: 100%" />
-          </div>
-          <div class="slide fade">
-            <img src="~/assets/3.jpg" style="width: 100%" />
-          </div>
-        </div> -->
         <div class="navigasi">
           <div class="nav">
             <NuxtLink to="/prewedding">Prewedding</NuxtLink>
@@ -46,12 +31,51 @@
             <NuxtLink to="/wedding">Wedding</NuxtLink>
           </div>
         </div>
+      </div> -->
+      <div class="gallery">
+        <div class="prewedding">
+          <div class="left-column">
+            <div class="img img-hor">
+              <img src="~/assets/7.jpg" alt="Prewedding Horizontal 1" />
+            </div>
+            <div class="img img-hor">
+              <img src="~/assets/7.jpg" alt="Prewedding Horizontal 2" />
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="img img-ver">
+              <img src="~/assets/6.jpg" alt="Prewedding Vertical" />
+            </div>
+          </div>
+        </div>
+
+        <div class="wedding">
+          <div class="left-column">
+            <div class="img img-hor">
+              <img src="~/assets/7.jpg" alt="Wedding Horizontal 1" />
+            </div>
+            <div class="img img-hor">
+              <img src="~/assets/7.jpg" alt="Wedding Horizontal 2" />
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="img img-ver">
+              <img src="~/assets/6.jpg" alt="Wedding Vertical" />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+    <div class="link">
+      <a href="/gallery">See More</a>
+    </div>
   </div>
 </template>
 
 <script setup>
+const supabase = useSupabaseClient();
+const images = ref([]);
+
 const showSlides = () => {
   let slideIndex = 0;
   const slides = document.getElementsByClassName("slide");
@@ -67,8 +91,14 @@ const showSlides = () => {
   }, 2000);
 };
 
+const getImg = async () => {
+  const { data } = await supabase.from("gallery").select(`*`);
+  if (data) images.value = data;
+};
+
 onMounted(() => {
   showSlides();
+  getImg();
 });
 </script>
 
@@ -144,7 +174,7 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-#gallery {
+/* #gallery {
   position: relative;
   overflow: hidden;
 }
@@ -190,6 +220,54 @@ onMounted(() => {
   color: #000000;
   text-decoration: none;
   font-size: 16px;
+} */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.prewedding {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  padding: 0px 0px 10px 10px;
+}
+
+.wedding {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  padding: 0px 10px 10px 0px;
+}
+.left-column {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+}
+
+.img-hor img,
+.img-ver img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.right-column .img-ver {
+  height: 100%;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.link > a {
+  color: #000000;
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {

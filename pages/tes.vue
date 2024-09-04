@@ -5,81 +5,59 @@
 </template>
 
 <!-- <template>
-  <div>
-    <h1>Gallery</h1>
-    <div v-if="loading">Loading...</div>
-    <div v-else>
-      <div v-for="photo in photos" :key="photo.id" class="photo">
-        <img :src="photo.url" :alt="photo.name" />
-      </div>
+  <div class="gallery-grid">
+    <div v-for="(image, index) in images" :key="index" class="gallery-item">
+      <img :src="image" alt="Gallery Image" />
     </div>
   </div>
 </template>
 
 <script>
-definePageMeta({
-  layout: "login",
-});
+const supabase = useSupabaseClient();
 
 export default {
-  data() {
-    return {
-      photos: [],
-      loading: true,
-    };
-  },
-  async mounted() {
-    try {
-      // Ambil daftar file dari bucket "Homeimg"
-      const { data, error } = await this.$supabase.storage
-        .from("Homeimg") // Gunakan nama bucket Anda di sini
-        .list("", { limit: 100 });
+  async asyncData() {
+    // Fetch images from Supabase storage
+    const { data, error } = await supabase.storage
+      .from("Homeimg") // Ganti dengan nama bucket Anda
+      .list("path/to/your/images"); // Ganti dengan path folder gambar Anda di Supabase
 
-      if (error) {
-        console.error("Error fetching files:", error);
-        this.loading = false;
-        return;
-      }
-
-      console.log("Files fetched:", data);
-
-      // Ambil URL untuk setiap file
-      const photoUrls = await Promise.all(
-        data.map(async (file) => {
-          const { publicURL, error } = this.$supabase.storage
-            .from("Homeimg") // Gunakan nama bucket Anda di sini
-            .getPublicUrl(file.name); // Mengambil URL publik file
-
-          if (error) {
-            console.error("Error fetching public URL:", error);
-            return null;
-          }
-
-          return { id: file.name, url: publicURL, name: file.name };
-        })
-      );
-
-      console.log("Photo URLs:", photoUrls);
-
-      this.photos = photoUrls.filter((url) => url !== null); // Filter null
-    } catch (err) {
-      console.error("An error occurred:", err);
-    } finally {
-      this.loading = false;
+    if (error) {
+      console.error(error);
+      return { images: [] };
     }
+
+    // Generate public URLs for each image
+    const images = data.map((image) => supabase.storage.from("your-bucket-name").getPublicUrl(`path/to/your/images/${image.name}`).publicUrl);
+
+    return { images };
   },
 };
 </script>
 
-<style>
-.photo {
-  margin: 10px;
-  display: inline-block;
+<style scoped>
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns */
+  gap: 10px;
 }
 
-.photo img {
-  width: 200px;
+.gallery-item img {
+  width: 100%;
   height: auto;
-  display: block;
+  object-fit: cover;
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr); /* Change to 2 columns */
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr; /* Change to 1 column */
+  }
 }
 </style> -->

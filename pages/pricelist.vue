@@ -1,20 +1,22 @@
 <template>
   <div>
     <div class="judul">
-      <h1>ENGAGEMENT PACKAGE</h1>
+      <h1>pricelist</h1>
     </div>
 
-    <div v-for="(list, i) in pricelist" :key="i">
-      <div class="card-container">
-        <div class="card">
-          <p class="title">{{ list.judul }}</p>
-          <p class="harga">Rp{{ list.price }}</p>
-          <p class="benefit">
-            {{ list.benefit }}
-          </p>
-          <p class="output">
-            {{ list.output }}
-          </p>
+    <div class="grid-container">
+      <div v-for="(list, i) in pricelist" :key="i">
+        <div class="card-container">
+          <div class="card">
+            <p class="title">{{ list.judul }}</p>
+            <p class="harga">Rp{{ list.price }}</p>
+            <p class="benefit">
+              {{ list.benefit }}
+            </p>
+            <p class="output">
+              {{ list.output }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -39,6 +41,12 @@ onMounted(() => {
 .judul > h1 {
   text-align: center;
   margin-top: 100px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
 }
 
 .card-container {
@@ -77,5 +85,19 @@ onMounted(() => {
   font-size: 1.2em;
   font-weight: 600;
   color: #000;
+}
+
+@media (max-width: 1150px) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto;
+  }
 }
 </style>
