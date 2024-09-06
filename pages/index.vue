@@ -21,47 +21,28 @@
     </section>
 
     <section id="gallery">
-      <!-- <div class="cover">
-        <img src="~/assets/1.jpg" alt="prewedding dan wedding" class="gallery-img" />
-        <div class="navigasi">
-          <div class="nav">
-            <NuxtLink to="/prewedding">Prewedding</NuxtLink>
-          </div>
-          <div class="nav">
-            <NuxtLink to="/wedding">Wedding</NuxtLink>
-          </div>
-        </div>
-      </div> -->
       <div class="gallery">
-        <div class="prewedding">
-          <div class="left-column">
-            <div class="img img-hor">
-              <img src="~/assets/7.jpg" alt="Prewedding Horizontal 1" />
-            </div>
-            <div class="img img-hor">
-              <img src="~/assets/7.jpg" alt="Prewedding Horizontal 2" />
-            </div>
-          </div>
-          <div class="right-column">
-            <div class="img img-ver">
-              <img src="~/assets/6.jpg" alt="Prewedding Vertical" />
-            </div>
+        <div class="column prewedding-horizontal">
+          <div v-for="(image, index) in prewedhor" :key="index" class="img img-hor">
+            <img :src="image.img" alt="Prewedding Horizontal" />
           </div>
         </div>
 
-        <div class="wedding">
-          <div class="left-column">
-            <div class="img img-hor">
-              <img src="~/assets/7.jpg" alt="Wedding Horizontal 1" />
-            </div>
-            <div class="img img-hor">
-              <img src="~/assets/7.jpg" alt="Wedding Horizontal 2" />
-            </div>
+        <div class="column prewedding-vertical">
+          <div v-for="(image, index) in prewedver" :key="index" class="img img-ver">
+            <img :src="image.img" alt="Prewedding Vertical" />
           </div>
-          <div class="right-column">
-            <div class="img img-ver">
-              <img src="~/assets/6.jpg" alt="Wedding Vertical" />
-            </div>
+        </div>
+
+        <div class="column wedding-vertical">
+          <div v-for="(image, index) in weddingver" :key="index" class="img img-ver">
+            <img :src="image.img" alt="Wedding Vertical" />
+          </div>
+        </div>
+
+        <div class="column wedding-horizontal">
+          <div v-for="(image, index) in weddinghor" :key="index" class="img img-hor">
+            <img :src="image.img" alt="Wedding Horizontal" />
           </div>
         </div>
       </div>
@@ -75,10 +56,15 @@
 <script setup>
 const supabase = useSupabaseClient();
 const images = ref([]);
+const prewedver = ref([]);
+const prewedhor = ref([]);
+const weddingver = ref([]);
+const weddinghor = ref([]);
 
 const showSlides = () => {
   let slideIndex = 0;
   const slides = document.getElementsByClassName("slide");
+
   setInterval(() => {
     for (let i = 0; i < slides.length; i++) {
       slides[i].style.display = "none";
@@ -92,13 +78,34 @@ const showSlides = () => {
 };
 
 const getImg = async () => {
-  const { data } = await supabase.from("gallery").select(`*`);
+  const { data } = await supabase.from("gallery").select(`*`).eq("ukuran", "hor");
   if (data) images.value = data;
+};
+
+const prewedVer = async () => {
+  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "prewed").eq("ukuran", "ver").limit(1);
+  if (data) prewedver.value = data;
+};
+const prewedHor = async () => {
+  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "prewed").eq("ukuran", "hor").limit(2);
+  if (data) prewedhor.value = data;
+};
+const weddingVer = async () => {
+  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "wedding").eq("ukuran", "ver").limit(1);
+  if (data) weddingver.value = data;
+};
+const weddingHor = async () => {
+  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "wedding").eq("ukuran", "hor").limit(2);
+  if (data) weddinghor.value = data;
 };
 
 onMounted(() => {
   showSlides();
   getImg();
+  prewedVer();
+  prewedHor();
+  weddingVer();
+  weddingHor();
 });
 </script>
 
@@ -174,76 +181,29 @@ onMounted(() => {
   margin-bottom: 20px;
 }
 
-/* #gallery {
-  position: relative;
-  overflow: hidden;
-}
-
-.cover {
-  position: relative;
-  width: 100%;
-}
-
-.gallery-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.navigasi {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
-  padding: 0 10px;
-}
-
-.nav {
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.nav:hover {
-  background-color: rgba(53, 53, 53, 0.8);
-  backdrop-filter: blur(10px);
-  color: #ffffff;
-}
-
-.nav a {
-  color: #000000;
-  text-decoration: none;
-  font-size: 16px;
-} */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  padding: 90px 20px 0px 20px;
   grid-gap: 20px;
+  width: 100%;
 }
 
-.prewedding {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
-  padding: 0px 0px 10px 10px;
-}
-
-.wedding {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
-  padding: 0px 10px 10px 0px;
-}
-.left-column {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+.img {
   gap: 10px;
+  margin-bottom: 10px;
+}
+
+.prewedding-horizontal .img-hor,
+.wedding-horizontal .img-hor {
+  width: 100%;
+  height: calc(30vh);
+}
+
+.prewedding-vertical .img-ver,
+.wedding-vertical .img-ver {
+  width: 100%;
+  height: calc(60.8vh);
 }
 
 .img-hor img,
@@ -251,10 +211,6 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.right-column .img-ver {
-  height: 100%;
 }
 
 .link {
@@ -302,6 +258,25 @@ onMounted(() => {
 
   .logo > img {
     margin-bottom: 20px;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 40px 20px 0px 20px;
+    grid-gap: 20px;
+    width: 100%;
+  }
+  .prewedding-horizontal .img-hor,
+  .wedding-horizontal .img-hor {
+    width: 100%;
+    height: calc(20vh);
+  }
+
+  .prewedding-vertical .img-ver,
+  .wedding-vertical .img-ver {
+    width: 100%;
+    height: calc(40.8vh);
   }
 }
 </style>

@@ -31,7 +31,7 @@ const Login = async () => {
     password: password.value,
   });
   if (data) {
-    navigateTo("/");
+    navigateTo("/admin");
   }
   if (error) console.log("error");
 };

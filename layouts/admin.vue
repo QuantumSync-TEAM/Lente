@@ -5,8 +5,12 @@
         <img src="~/assets/logo.png" alt="" />
       </div>
       <div class="button">
-        <button>Keluar</button>
-        <button>Logout</button>
+        <NuxtLink to="/">
+          <button>Keluar</button>
+        </NuxtLink>
+        <NuxtLink to="/logout">
+          <button>Logout</button>
+        </NuxtLink>
       </div>
     </div>
     <div class="contain">
@@ -44,7 +48,7 @@
   bottom: 20px;
 }
 
-.button > button {
+button {
   background-color: #dfdfdf;
   border: none;
   border-radius: 8px;

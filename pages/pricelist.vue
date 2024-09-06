@@ -59,7 +59,7 @@ onMounted(() => {
 
 .card {
   width: 300px;
-  height: 150px;
+  height: 300px;
   border-radius: 12px;
   font-family: sans-serif;
   background-color: #fff;
@@ -85,6 +85,10 @@ onMounted(() => {
   font-size: 1.2em;
   font-weight: 600;
   color: #000;
+}
+
+.benefit {
+  white-space: pre-line;
 }
 
 @media (max-width: 1150px) {

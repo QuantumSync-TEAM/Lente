@@ -1,12 +1,35 @@
 <template>
   <div class="container">
-    <div class="fc">
-      <div v-for="(image, index) in images" :key="index" class="foto">
-        <div class="persegi">
-          <img :src="image.img" alt="Image" class="image" />
+    <div class="judul">
+      <div class="text"><h1>Prewedding</h1></div>
+      <div class="text"><h1>Wedding</h1></div>
+    </div>
+    <div class="gallery">
+      <!-- Prewedding Gallery -->
+      <div class="prewedding">
+        <div class="left-column">
+          <div class="img img-hor" v-for="(image, index) in prewedhor" :key="index">
+            <img :src="image.img" :alt="`Prewedding Horizontal ${index + 1}`" />
+          </div>
         </div>
-        <div class="perpanver">
-          <img :src="image.img" alt="Image" class="image" />
+        <div class="right-column">
+          <div class="img img-ver" v-for="(image, index) in prewedver" :key="index">
+            <img :src="image.img" :alt="`Prewedding Vertical ${index + 1}`" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Wedding Gallery -->
+      <div class="wedding">
+        <div class="left-column">
+          <div class="img img-hor" v-for="(image, index) in weddinghor" :key="index">
+            <img :src="image.img" :alt="`Wedding Horizontal ${index + 1}`" />
+          </div>
+        </div>
+        <div class="right-column">
+          <div class="img img-ver" v-for="(image, index) in weddingver" :key="index">
+            <img :src="image.img" :alt="`Wedding Vertical ${index + 1}`" />
+          </div>
         </div>
       </div>
     </div>
@@ -15,58 +38,92 @@
 
 <script setup>
 const supabase = useSupabaseClient();
-const images = ref([]);
+const prewedver = ref([]);
+const prewedhor = ref([]);
+const weddingver = ref([]);
+const weddinghor = ref([]);
 
-const getImg = async () => {
-  const { data } = await supabase.from("gallery").select(`*, kategori(*)`);
-  if (data) images.value = data;
-  console.log(images);
+const prewedVer = async () => {
+  const { data, error } = await supabase.from("gallery").select(`*`).eq("kategori", "prewed").eq("ukuran", "ver");
+  if (data) prewedver.value = data;
+};
+const prewedHor = async () => {
+  const { data, error } = await supabase.from("gallery").select(`*`).eq("kategori", "prewed").eq("ukuran", "hor");
+  if (data) prewedhor.value = data;
+};
+const weddingVer = async () => {
+  const { data, error } = await supabase.from("gallery").select(`*`).eq("kategori", "wedding").eq("ukuran", "ver");
+  if (data) weddingver.value = data;
+};
+const weddingHor = async () => {
+  const { data, error } = await supabase.from("gallery").select(`*`).eq("kategori", "wedding").eq("ukuran", "hor");
+  if (data) weddinghor.value = data;
 };
 
 onMounted(() => {
-  getImg();
+  prewedVer();
+  prewedHor();
+  weddingVer();
+  weddingHor();
 });
 </script>
 
 <style scoped>
-.fc {
-  display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+.container {
+  margin-top: 100px;
+  height: auto;
+  width: 100%;
 }
 
-.foto {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
+.judul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
 }
 
-.persegi,
-.perpanver {
-  background-color: black;
-  margin: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.text {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.persegi {
-  width: 150px;
-  height: 150px;
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
 }
 
-.perpanver {
-  width: 150px;
-  height: 300px;
+.prewedding {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  padding: 0px 0px 10px 10px;
 }
 
-.image {
+.wedding {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  padding: 0px 10px 10px 0px;
+}
+
+.left-column {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+}
+
+.img-hor img,
+.img-ver img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.img-ver > img {
+  height: 100%;
+}
+
+.img-hor > img {
+  width: 100%;
 }
 </style>
