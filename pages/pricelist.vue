@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="judul">
-      <h1>pricelist</h1>
+      <h1>Pricelist</h1>
     </div>
 
     <div class="grid-container">
