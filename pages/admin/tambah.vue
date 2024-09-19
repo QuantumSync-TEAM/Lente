@@ -1,33 +1,3 @@
-<!-- <template>
-  <div class="container">
-    <form @submit.prevent="uploadImage">
-      <div class="form">
-        <div>
-          <label>File</label>
-          <input type="file" @change="handleFileInput" />
-        </div>
-
-        <div>
-          <label>kategori</label>
-          <select>
-            <option value="prewed">Prewedding</option>
-            <option value="wedding">Wedding</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Ukuran</label>
-          <select>
-            <option value="hor">Horizontal</option>
-            <option value="ver">Vertical</option>
-          </select>
-        </div>
-
-        <button type="submit">Upload Foto</button>
-      </div>
-    </form>
-  </div>
-</template> -->
 <template>
   <div class="container">
     <form @submit.prevent="uploadImage">
@@ -99,6 +69,7 @@ label {
 
 .input-file {
   background-color: #fff;
+  width: 95%;
 }
 
 .input-select {

@@ -72,8 +72,6 @@
   object-fit: cover;
 }
 
- 
-
 @media (max-width: 768px) {
   .gallery {
     display: grid;
@@ -122,7 +120,7 @@ const weddingHor = async () => {
 
 onMounted(() => {
   prewedVer();
-  prewedHor();
+  prewedHor();  
   weddingVer();
   weddingHor();
 });

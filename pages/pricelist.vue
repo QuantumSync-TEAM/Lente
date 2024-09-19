@@ -8,7 +8,7 @@
       <div v-for="(list, i) in pricelist" :key="i">
         <div class="card-container">
           <div class="card">
-            <p class="title">{{ list.judul }}</p>
+            <p class="title">{{ list.judul }} {{ list.kategori.paket }}</p>
             <p class="harga">Rp{{ list.price }}</p>
             <p class="benefit">
               {{ list.benefit }}
