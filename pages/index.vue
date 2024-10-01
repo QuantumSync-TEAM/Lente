@@ -10,7 +10,7 @@
       </div>
     </section>
 
-    <section id="about" :class="{ show: animasi }">
+    <section id="about" data-aos="zoom-in">
       <div class="logo">
         <img src="~/assets/logo.png" alt="Lenteart" />
       </div>
@@ -24,25 +24,25 @@
       <div class="gallery">
         <div class="column prewedding-horizontal">
           <div v-for="(image, index) in prewedhor" :key="index" class="img img-hor">
-            <img :src="image.img" alt="Prewedding Horizontal" />
+            <img :src="image.img" alt="Prewedding Horizontal" data-aos="zoom-in" />
           </div>
         </div>
 
         <div class="column prewedding-vertical">
           <div v-for="(image, index) in prewedver" :key="index" class="img img-ver">
-            <img :src="image.img" alt="Prewedding Vertical" />
+            <img :src="image.img" alt="Prewedding Vertical" data-aos="zoom-in" />
           </div>
         </div>
 
         <div class="column wedding-vertical">
           <div v-for="(image, index) in weddingver" :key="index" class="img img-ver">
-            <img :src="image.img" alt="Wedding Vertical" />
+            <img :src="image.img" alt="Wedding Vertical" data-aos="zoom-in" />
           </div>
         </div>
 
         <div class="column wedding-horizontal">
           <div v-for="(image, index) in weddinghor" :key="index" class="img img-hor">
-            <img :src="image.img" alt="Wedding Horizontal" />
+            <img :src="image.img" alt="Wedding Horizontal" data-aos="zoom-in" />
           </div>
         </div>
       </div>
@@ -115,6 +115,14 @@ onMounted(() => {
   prewedHor();
   weddingVer();
   weddingHor();
+});
+
+onMounted(() => {
+  AOS.init({
+    duration: 700,
+    easing: "ease-in-out",
+    once: true,
+  });
 });
 </script>
 

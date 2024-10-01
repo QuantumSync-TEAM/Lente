@@ -31,7 +31,7 @@ const Login = async () => {
     password: password.value,
   });
   if (data) {
-    navigateTo("/admin");
+    navigateTo("/admin/gallery");
   }
   if (error) console.log("error");
 };

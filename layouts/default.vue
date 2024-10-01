@@ -10,11 +10,13 @@
             <NuxtLink to="/"><p class="activ">Home</p></NuxtLink>
             <NuxtLink to="#about"><p class="activ">About</p></NuxtLink>
           </div>
-          <div class="logoNav">
-            <img src="~/assets/logo.png" alt="Lenteart" />
-          </div>
+          <NuxtLink to="/admin/gallery">
+            <div class="logoNav">
+              <img src="~/assets/logo.png" alt="Lenteart" />
+            </div>
+          </NuxtLink>
           <div class="kanan">
-            <NuxtLink to="#gallery"><p class="activ">Gallery</p></NuxtLink>
+            <NuxtLink to="/gallery"><p class="activ">Gallery</p></NuxtLink>
             <NuxtLink to="pricelist"><p class="activ">Price List</p></NuxtLink>
           </div>
         </div>
@@ -29,7 +31,6 @@
 
     <footer class="footer">
       <div class="footer__content">
-        <!-- Media Sosial -->
         <div class="footer__section footer__social">
           <h2>Media Sosial</h2>
           <ul>

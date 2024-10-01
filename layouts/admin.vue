@@ -73,18 +73,14 @@ button {
         <img src="~/assets/logo.png" alt="Logo" />
       </div>
 
-      <!-- <nav>
-        <NuxtLink to="/admin/gallery">
-          <div class="navigasi">
-            <p class="activ">Gallery</p>
-          </div>
+      <div class="navbar">
+        <NuxtLink to="gallery" class="navigasi">
+          <button>Gallery</button>
         </NuxtLink>
-        <NuxtLink to="/admin/pricelist">
-          <div class="navigasi">
-            <p class="activ">Pricelist</p>
-          </div>
+        <NuxtLink to="pricelist" class="navigasi">
+          <button>Pricelist</button>
         </NuxtLink>
-      </nav> -->
+      </div>
 
       <div class="button">
         <NuxtLink to="/">
@@ -142,7 +138,7 @@ button {
   margin: 10px;
 }
 
-.button > button:hover {
+button:hover {
   background-color: #353535;
   color: #ffffff;
   transform: scale(1.1);
@@ -151,5 +147,11 @@ button {
 
 .content {
   margin-left: 250px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 </style>
