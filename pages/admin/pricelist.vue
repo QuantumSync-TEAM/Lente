@@ -17,7 +17,17 @@
             </select>
           </div>
 
-       
+          <div class="form-group">
+            <label>Package</label>
+            <select v-model="form.package" class="input-select">
+              <option value="">Pilih Ukuran</option>
+              <option value="Engagement">Engagement</option>
+              <option value="Prewedding">Prewedding</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Spesial">Spesial</option>
+              <option value="Video">Video</option>
+            </select>
+          </div>
 
           <div class="form-group">
             <label>Harga</label>
@@ -26,12 +36,12 @@
 
           <div class="form-group">
             <label>Benefit</label>
-            <input v-model="form.benefit" type="text" class="input-select" />
+            <textarea v-model="form.benefit" type="text" class="input-select" />
           </div>
 
           <div class="form-group">
             <label>Output</label>
-            <input v-model="form.output" type="text" class="input-select" />
+            <textarea v-model="form.output" type="text" class="input-select" />
           </div>
           <button type="submit" class="btn-submit">Tambah Paket</button>
         </form>
@@ -74,7 +84,7 @@ const kategori = ref([]);
 const form = ref({
   judul: "",
   tier: "",
-  // package: "",
+  package: "",
   price: "",
   benefit: "",
   output: "",

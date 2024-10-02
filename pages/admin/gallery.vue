@@ -24,7 +24,6 @@
               <option value="hor">Horizontal</option>
               <option value="ver">Vertical</option>
             </select>
-            dggs d
           </div>
           <button type="submit" class="btn-submit">Upload Foto</button>
         </form>

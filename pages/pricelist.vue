@@ -8,7 +8,7 @@
       <div v-for="(list, i) in pricelist" :key="i">
         <div class="card-container">
           <div class="card">
-            <p class="title">{{ list.judul }} {{ list.kategori.paket }}</p>
+            <p class="title">{{ list.judul }} {{ list.tier }}</p>
             <p class="harga">Rp{{ list.price }}</p>
             <p class="benefit">
               {{ list.benefit }}
@@ -28,7 +28,7 @@ const supabase = useSupabaseClient();
 const pricelist = ref([]);
 
 const getData = async () => {
-  const { data } = await supabase.from("package").select(`*, kategori(*)`);
+  const { data } = await supabase.from("package").select(`*`);
   if (data) pricelist.value = data;
 };
 
