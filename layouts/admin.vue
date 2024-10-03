@@ -117,7 +117,7 @@ button {
   width: 250px;
 }
 
-.logo > img {
+.logo>img {
   width: 80px;
 }
 
