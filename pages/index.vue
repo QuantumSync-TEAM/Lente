@@ -15,11 +15,8 @@
         <img src="~/assets/logo.png" alt="Lenteart" />
       </div>
       <p>
-        Setiap detik cerita rasa yang berbeda, semua di satukan dalam sebuah cerita yang indah. "Kami ingin membantu
-        kalian untuk menceritakan setiap cerita yang kalian miliki. kami siap untuk berbagi kegembiran dan emosi dengan
-        kalian,
-        dalam bingkai yang indah, yang akan kita satukan dalam sebuah cerita yang tidak akan terganti dan akan di ingat
-        selamanya”
+        Setiap detik cerita rasa yang berbeda, semua di satukan dalam sebuah cerita yang indah. "Kami ingin membantu kalian untuk menceritakan setiap cerita yang kalian miliki. kami siap untuk berbagi kegembiran dan emosi dengan kalian,
+        dalam bingkai yang indah, yang akan kita satukan dalam sebuah cerita yang tidak akan terganti dan akan di ingat selamanya”
       </p>
     </section>
 
@@ -154,7 +151,7 @@ onMounted(() => {
   margin-top: 30px;
 }
 
-.logo>img {
+.logo > img {
   width: 50px;
   margin-top: 15px;
   margin: 30px;
@@ -177,7 +174,7 @@ onMounted(() => {
   }
 }
 
-.logo>img {
+.logo > img {
   margin-bottom: 20px;
 }
 
@@ -221,7 +218,7 @@ onMounted(() => {
   margin-bottom: 10px;
 }
 
-.link>a {
+.link > a {
   color: #000000;
   text-decoration: none;
 }
@@ -256,7 +253,7 @@ onMounted(() => {
     text-align: center;
   }
 
-  .logo>img {
+  .logo > img {
     margin-bottom: 20px;
   }
 
@@ -267,7 +264,6 @@ onMounted(() => {
     grid-gap: 20px;
     width: 100%;
   }
-
   .prewedding-horizontal .img-hor,
   .wedding-horizontal .img-hor {
     width: 100%;

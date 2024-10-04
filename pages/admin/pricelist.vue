@@ -20,7 +20,7 @@
           <div class="form-group">
             <label>Package</label>
             <select v-model="form.package" class="input-select">
-              <option value="">Pilih Ukuran</option>
+              <option value="">Pilih Kategori Paket</option>
               <option value="Engagement">Engagement</option>
               <option value="Prewedding">Prewedding</option>
               <option value="Wedding">Wedding</option>
@@ -51,15 +51,48 @@
     <div class="kanan">
       <div class="pricelist">
         <div class="grid-container">
-          <div v-for="(list, i) in pricelist" :key="i">
+          <div v-for="(list, i) in engagement" :key="i">
+            <div class="card-container">
+              <div class="card card-engagement">
+                <p class="title">{{ list.judul }}</p>
+                <p class="price">Rp.{{ list.price }}</p>
+                <p class="benefit">
+                  {{ list.benefit }}
+                </p>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in prewedding" :key="i">
             <div class="card-container">
               <div class="card">
-                <p class="title">{{ list.judul }} {{ list.kategori.tier }}</p>
-                <p class="harga">Rp{{ list.price }}</p>
+                <p class="title">{{ list.judul }}</p>
+                <p class="price">Rp.{{ list.price }}</p>
+                <p class="benefit">
+                  {{ list.benefit }}
+                </p>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in wedding" :key="i">
+            <div class="card-container">
+              <div class="card card-wedding">
+                <p class="title">{{ list.judul }}</p>
+                <p class="price">Rp.{{ list.price }}</p>
                 <p class="benefit">
                   {{ list.benefit }}
                 </p>
                 <p class="output">
+                  <b>Output:</b><br />
                   {{ list.output }}
                 </p>
                 <button @click="Update(list.id)">Edit</button>
@@ -68,6 +101,8 @@
             </div>
           </div>
         </div>
+
+        <!-- pricelist end -->
       </div>
     </div>
   </div>
@@ -79,8 +114,12 @@ definePageMeta({
   middleware: "auth",
 });
 const supabase = useSupabaseClient();
-const pricelist = ref([]);
 const kategori = ref([]);
+const engagement = ref([]);
+const prewedding = ref([]);
+const wedding = ref([]);
+const spesial = ref([]);
+const video = ref([]);
 const form = ref({
   judul: "",
   tier: "",
@@ -101,9 +140,26 @@ const getKategori = async () => {
   if (data) kategori.value = data;
 };
 
-const getData = async () => {
-  const { data } = await supabase.from("package").select(`*, kategori(*)`);
-  if (data) pricelist.value = data;
+// get Pricelist
+const getEngagement = async () => {
+  const { data } = await supabase.from("package").select(`*`).eq("package", "Engagement");
+  if (data) engagement.value = data;
+};
+const getPrewedding = async () => {
+  const { data } = await supabase.from("package").select(`*`).eq("package", "Prewedding");
+  if (data) prewedding.value = data;
+};
+const getWedding = async () => {
+  const { data } = await supabase.from("package").select(`*`).eq("package", "Wedding");
+  if (data) wedding.value = data;
+};
+const getSpesial = async () => {
+  const { data } = await supabase.from("package").select(`*`).eq("package", "Spesial");
+  if (data) spesial.value = data;
+};
+const getVideo = async () => {
+  const { data } = await supabase.from("package").select(`*`).eq("package", "Video");
+  if (data) video.value = data;
 };
 
 const Update = async (id) => {
@@ -131,8 +187,12 @@ const hapusPackage = async (packageId) => {
 };
 
 onMounted(() => {
-  getData();
+  getEngagement();
+  getPrewedding();
+  getWedding();
   getKategori();
+  getSpesial();
+  getVideo();
 });
 </script>
 

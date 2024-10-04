@@ -32,52 +32,6 @@
   </div>
 </template>
 
-<script setup>
-const supabase = useSupabaseClient();
-const prewedver = ref([]);
-const prewedhor = ref([]);
-const weddingver = ref([]);
-const weddinghor = ref([]);
-
-const isModalOpen = ref(false);
-const modalImage = ref("");
-
-const prewedVer = async () => {
-  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "prewed").eq("ukuran", "ver");
-  if (data) prewedver.value = data;
-};
-const prewedHor = async () => {
-  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "prewed").eq("ukuran", "hor");
-  if (data) prewedhor.value = data;
-};
-const weddingVer = async () => {
-  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "wedding").eq("ukuran", "ver");
-  if (data) weddingver.value = data;
-};
-const weddingHor = async () => {
-  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "wedding").eq("ukuran", "hor");
-  if (data) weddinghor.value = data;
-};
-
-const openModal = (imageSrc) => {
-  modalImage.value = imageSrc;
-  isModalOpen.value = true;
-};
-
-const closeModal = () => {
-  isModalOpen.value = false;
-  modalImage.value = "";
-};
-
-onMounted(() => {
-  prewedVer();
-  prewedHor();
-  weddingVer();
-  weddingHor();
-});
-</script>
-
-
 <style scoped>
 .modal {
   display: flex;
@@ -159,7 +113,6 @@ onMounted(() => {
     grid-gap: 20px;
     width: 100%;
   }
-
   .prewedding-horizontal .img-hor,
   .wedding-horizontal .img-hor {
     width: 100%;
@@ -173,3 +126,48 @@ onMounted(() => {
   }
 }
 </style>
+
+<script setup>
+const supabase = useSupabaseClient();
+const prewedver = ref([]);
+const prewedhor = ref([]);
+const weddingver = ref([]);
+const weddinghor = ref([]);
+
+const isModalOpen = ref(false);
+const modalImage = ref("");
+
+const prewedVer = async () => {
+  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "prewed").eq("ukuran", "ver");
+  if (data) prewedver.value = data;
+};
+const prewedHor = async () => {
+  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "prewed").eq("ukuran", "hor");
+  if (data) prewedhor.value = data;
+};
+const weddingVer = async () => {
+  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "wedding").eq("ukuran", "ver");
+  if (data) weddingver.value = data;
+};
+const weddingHor = async () => {
+  const { data, error } = await supabase.from("gallery").select("*").eq("kategori", "wedding").eq("ukuran", "hor");
+  if (data) weddinghor.value = data;
+};
+
+const openModal = (imageSrc) => {
+  modalImage.value = imageSrc;
+  isModalOpen.value = true;
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  modalImage.value = "";
+};
+
+onMounted(() => {
+  prewedVer();
+  prewedHor();
+  weddingVer();
+  weddingHor();
+});
+</script>
