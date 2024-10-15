@@ -1,113 +1,3 @@
-<template>
-  <div class="container">
-    <div class="kiri">
-      <div class="form">
-        <form @submit.prevent="tambahPackage">
-          <div class="form-group">
-            <label>Nama Paket</label>
-            <input v-model="form.judul" type="text" class="input-select" />
-          </div>
-
-          <div class="form-group">
-            <label>Tier</label>
-            <select v-model="form.tier" class="input-select">
-              <option v-for="(item, i) in kategori" :key="i" :value="item.id">
-                {{ item.tier }}
-              </option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Package</label>
-            <select v-model="form.package" class="input-select">
-              <option value="">Pilih Kategori Paket</option>
-              <option value="Engagement">Engagement</option>
-              <option value="Prewedding">Prewedding</option>
-              <option value="Wedding">Wedding</option>
-              <option value="Spesial">Spesial</option>
-              <option value="Video">Video</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Harga</label>
-            <input v-model="form.price" type="text" class="input-select" />
-          </div>
-
-          <div class="form-group">
-            <label>Benefit</label>
-            <textarea v-model="form.benefit" type="text" class="input-select" />
-          </div>
-
-          <div class="form-group">
-            <label>Output</label>
-            <textarea v-model="form.output" type="text" class="input-select" />
-          </div>
-          <button type="submit" class="btn-submit">Tambah Paket</button>
-        </form>
-      </div>
-    </div>
-
-    <div class="kanan">
-      <div class="pricelist">
-        <div class="grid-container">
-          <div v-for="(list, i) in engagement" :key="i">
-            <div class="card-container">
-              <div class="card card-engagement">
-                <p class="title">{{ list.judul }}</p>
-                <p class="price">Rp.{{ list.price }}</p>
-                <p class="benefit">
-                  {{ list.benefit }}
-                </p>
-                <button @click="Update(list.id)">Edit</button>
-                <button @click="hapusPackage(list.id)">Hapus</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid-container">
-          <div v-for="(list, i) in prewedding" :key="i">
-            <div class="card-container">
-              <div class="card">
-                <p class="title">{{ list.judul }}</p>
-                <p class="price">Rp.{{ list.price }}</p>
-                <p class="benefit">
-                  {{ list.benefit }}
-                </p>
-                <button @click="Update(list.id)">Edit</button>
-                <button @click="hapusPackage(list.id)">Hapus</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid-container">
-          <div v-for="(list, i) in wedding" :key="i">
-            <div class="card-container">
-              <div class="card card-wedding">
-                <p class="title">{{ list.judul }}</p>
-                <p class="price">Rp.{{ list.price }}</p>
-                <p class="benefit">
-                  {{ list.benefit }}
-                </p>
-                <p class="output">
-                  <b>Output:</b><br />
-                  {{ list.output }}
-                </p>
-                <button @click="Update(list.id)">Edit</button>
-                <button @click="hapusPackage(list.id)">Hapus</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- pricelist end -->
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
 definePageMeta({
   layout: "admin",
@@ -120,6 +10,10 @@ const prewedding = ref([]);
 const wedding = ref([]);
 const spesial = ref([]);
 const video = ref([]);
+const Maternity = ref([]);
+const PrewedStudio = ref([]);
+const Wisuda = ref([]);
+const Group = ref([]);
 const form = ref({
   judul: "",
   tier: "",
@@ -161,6 +55,35 @@ const getVideo = async () => {
   const { data } = await supabase.from("package").select(`*`).eq("package", "Video");
   if (data) video.value = data;
 };
+const getMaternity = async () => {
+  const { data } = await supabase.from("package").select(`*`).eq("package", "Maternity");
+  if (data) Maternity.value = data;
+};
+const getPrewedStudio = async () => {
+  const { data } = await supabase.from("package").select(`*`).eq("package", "PreweddingStudio");
+  if (data) PrewedStudio.value = data;
+};
+const getWisuda = async () => {
+  const { data } = await supabase.from("package").select(`*`).eq("package", "Wisuda/Keluarga");
+  if (data) Wisuda.value = data;
+};
+const getGroup = async () => {
+  const { data } = await supabase.from("package").select(`*`).eq("package", "Group");
+  if (data) Group.value = data;
+};
+
+onMounted(() => {
+  getKategori();
+  getEngagement();
+  getPrewedding();
+  getWedding();
+  getSpesial();
+  getVideo();
+  getMaternity();
+  getPrewedStudio();
+  getWisuda();
+  getGroup();
+});
 
 const Update = async (id) => {
   const newPrice = prompt("Masukkan harga baru:");
@@ -185,16 +108,269 @@ const hapusPackage = async (packageId) => {
     window.location.reload();
   }
 };
-
-onMounted(() => {
-  getEngagement();
-  getPrewedding();
-  getWedding();
-  getKategori();
-  getSpesial();
-  getVideo();
-});
 </script>
+
+<template>
+  <div class="container">
+    <div class="kiri">
+      <div class="form">
+        <form @submit.prevent="tambahPackage">
+          <div class="form-group">
+            <label>Nama Paket</label>
+            <input v-model="form.judul" type="text" class="input-select" />
+          </div>
+
+          <div class="form-group">
+            <label>Tier</label>
+            <select v-model="form.tier" class="input-select">
+              <option v-for="(item, i) in kategori" :key="i" :value="item.id">
+                {{ item.tier }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Package</label>
+            <select v-model="form.package" class="input-select">
+              <option value="">Pilih Kategori Paket</option>
+              <option value="Engagement">Engagement</option>
+              <option value="Prewedding">Prewedding</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Spesial">Spesial</option>
+              <option value="Video">Video</option>
+              <option value="Maternity">Maternity</option>
+              <option value="PreweddingStudio">Prewedding Studio</option>
+              <option value="Wisuda/Keluarga">Wisuda / Foto Keluarga</option>
+              <option value="Group">Group</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Harga</label>
+            <input v-model="form.price" type="text" class="input-select" />
+          </div>
+
+          <div class="form-group">
+            <label>Benefit</label>
+            <textarea v-model="form.benefit" type="text" class="input-select" />
+          </div>
+
+          <div class="form-group">
+            <label>Output</label>
+            <textarea v-model="form.output" type="text" class="input-select" />
+          </div>
+          <button type="submit" class="btn-submit">Tambah Paket</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="kanan">
+      <div class="pricelist">
+        <div class="grid-container">
+          <div v-for="(list, i) in engagement" :key="i">
+            <div class="card-container">
+              <div class="card">
+                <div class="title">
+                  <p>{{ list.judul }}</p>
+                </div>
+                <div class="price">
+                  <p>Rp.{{ list.price }}</p>
+                </div>
+                <div class="benefit">
+                  <span><b>Benefit</b></span>
+                  <p>{{ list.benefit }}</p>
+                </div>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in prewedding" :key="i">
+            <div class="card-container">
+              <div class="card">
+                <div class="title">
+                  <p>{{ list.judul }}</p>
+                </div>
+                <div class="price">
+                  <p>Rp.{{ list.price }}</p>
+                </div>
+                <div class="benefit">
+                  <span><b>Benefit</b></span>
+                  <p>{{ list.benefit }}</p>
+                </div>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in wedding" :key="i">
+            <div class="card-container">
+              <div class="card">
+                <div class="title">
+                  <p>{{ list.judul }}</p>
+                </div>
+                <div class="price">
+                  <p>Rp.{{ list.price }}</p>
+                </div>
+                <div class="benefit">
+                  <span><b>Benefit</b></span>
+                  <p>{{ list.benefit }}</p>
+                </div>
+                <div class="output">
+                  <span><b>Output</b></span>
+                  <p>{{ list.output }}</p>
+                </div>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in spesial" :key="i">
+            <div class="card-container">
+              <div class="card">
+                <div class="title">
+                  <p>{{ list.judul }}</p>
+                </div>
+                <div class="price">
+                  <p>Rp.{{ list.price }}</p>
+                </div>
+                <div class="benefit">
+                  <span><b>Benefit</b></span>
+                  <p>{{ list.benefit }}</p>
+                </div>
+                <div class="output">
+                  <span><b>Output</b></span>
+                  <p>{{ list.output }}</p>
+                </div>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in video" :key="i">
+            <div class="card-container">
+              <div class="card">
+                <div class="title">
+                  <p>{{ list.judul }}</p>
+                </div>
+                <div class="price">
+                  <p>Rp.{{ list.price }}</p>
+                </div>
+                <div class="benefit">
+                  <span><b>Benefit</b></span>
+                  <p>{{ list.benefit }}</p>
+                </div>
+                <div class="output">
+                  <span><b>Output</b></span>
+                  <p>{{ list.output }}</p>
+                </div>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in Maternity" :key="i">
+            <div class="card-container">
+              <div class="card">
+                <div class="title">
+                  <p>{{ list.judul }}</p>
+                </div>
+                <div class="price">
+                  <p>Rp.{{ list.price }}</p>
+                </div>
+                <div class="benefit">
+                  <span><b>Benefit</b></span>
+                  <p>{{ list.benefit }}</p>
+                </div>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in PrewedStudio" :key="i">
+            <div class="card-container">
+              <div class="card">
+                <div class="title">
+                  <p>{{ list.judul }}</p>
+                </div>
+                <div class="price">
+                  <p>Rp.{{ list.price }}</p>
+                </div>
+                <div class="benefit">
+                  <span><b>Benefit</b></span>
+                  <p>{{ list.benefit }}</p>
+                </div>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in Wisuda" :key="i">
+            <div class="card-container">
+              <div class="card">
+                <div class="title">
+                  <p>{{ list.judul }}</p>
+                </div>
+                <div class="price">
+                  <p>Rp.{{ list.price }}</p>
+                </div>
+                <div class="benefit">
+                  <span><b>Benefit</b></span>
+                  <p>{{ list.benefit }}</p>
+                </div>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div v-for="(list, i) in Group" :key="i">
+            <div class="card-container">
+              <div class="card">
+                <div class="title">
+                  <p>{{ list.judul }}</p>
+                </div>
+                <div class="price">
+                  <p>Rp.{{ list.price }}</p>
+                </div>
+                <div class="benefit">
+                  <span><b>Benefit</b></span>
+                  <p>{{ list.benefit }}</p>
+                </div>
+                <button @click="Update(list.id)">Edit</button>
+                <button @click="hapusPackage(list.id)">Hapus</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end -->
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .container {
@@ -223,6 +399,7 @@ onMounted(() => {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   height: 90vh;
+  width: 60vw;
 }
 
 ::-webkit-scrollbar {
@@ -288,7 +465,7 @@ label {
   margin-top: 100px;
 }
 
-.grid-container {
+/* .grid-container {
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 10px;
@@ -300,11 +477,28 @@ label {
   align-items: center;
   height: 100%;
   width: 100%;
+} */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 20px;
+  padding: 10px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
 }
 
 .card {
-  width: 300px;
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 250px;
+  max-width: 300px;
+  min-height: 200px;
   border-radius: 12px;
   font-family: sans-serif;
   background-color: #fff;
@@ -314,17 +508,30 @@ label {
   margin: 20px;
 }
 
-.card .harga {
-  font-size: 1em;
-  font-weight: 600;
-  color: #000;
-  margin-bottom: 4px;
+.card-content {
+  flex-grow: 1;
 }
 
-.card .title {
-  font-size: 1.2em;
-  font-weight: 600;
-  color: #000;
+.title > p,
+.price > p {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.price > p {
+  font-size: 1.3em;
+}
+
+.benefit,
+.output {
+  margin-bottom: 10px;
+}
+
+.benefit,
+.output > p {
+  line-height: 1.5em;
+  white-space: pre-line;
 }
 
 button {
@@ -334,9 +541,5 @@ button {
   padding: 10px 20px;
   margin: 10px;
   cursor: pointer;
-}
-
-.benefit {
-  white-space: pre-line;
 }
 </style>
