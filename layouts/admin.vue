@@ -30,6 +30,11 @@
 </template>
 
 <style scoped>
+* {
+  font-family: Arial, sans-serif;
+  scroll-behavior: smooth;
+}
+
 .container {
   background-color: #dfdfdf;
   display: grid;

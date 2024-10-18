@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-  title: "Lente Home",
+  title: "Home",
 });
 const supabase = useSupabaseClient();
 const images = ref([]);
